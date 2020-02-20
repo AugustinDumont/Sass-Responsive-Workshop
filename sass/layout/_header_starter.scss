@@ -1,0 +1,40 @@
+.header {
+    height: 95vh;
+    background-image: linear-gradient(to right bottom,
+            rgba($color-grey-dark-3, 0.7),
+            rgba($color-grey-dark-3, 0.7)),
+        url(../img/hero-small.jpg);
+    background-size: cover;
+    background-position: top;
+    position: relative;
+    clip-path: polygon(0% 0%, 100% 0%, 100% calc(100% - #{$angle}), 50% 100%, 0% calc(100% - #{$angle}));
+
+    &__logo-box {
+        position: absolute;
+        top: 4rem;
+        left: 4rem;
+    }
+
+    &__logo {
+        height: 7rem;
+    }
+
+    &__text-box {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+    }
+}
+
+/*
+
+1. Why using Vh? 
+2. Add -webkit for the clip-path
+3. Add @supports for the clip-path
+4.a Switch to higher image if resolution higher than 192dpi
+4.b Switch to higher image if high resolution but only if device bigger than 600px or 37.5em
+5. Switch to higher  image, even the resolution's screen isn't hight but width's device bigger than 2000px or 125em
+
+*/
