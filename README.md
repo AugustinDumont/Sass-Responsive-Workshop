@@ -2,7 +2,7 @@
 
 ## A propos : 
 
-Ce workshop est réalisé dans le cadre d'une formation réalisée @ BeCode. 
+Ce workshop est réalisé dans le cadre de ma formation BeCode. 
 Il est basé et construit autour d'un cours UDEMY réalisé par Jonas Schmedtmann et intitulé "Advanced CSS and Sass : Flexbox, Grid, Animations and More!". A tous ceux et celles qui souhaitent améliorer leurs compétences en HTML, CSS, SASS, je le recommande vivement. 
 
 Je compte vous partager ce que j'en ai retenu en réalisant un One Page design et responsive. 
@@ -22,7 +22,7 @@ Bonne lecture !
 
 - Avoir une meilleure compréhension de Sass et plus particulièrement Scss. 
 - Comment organiser l'architecture de ses fichiers? 
-- Comment utiliser les fonctionnalités variables, mixins, imports, ect?
+- Comment utiliser les fonctionnalités variables, mixins, imports, etc?
 - Comment utiliser l'indentation BEM?
 
 ### Responsive design
@@ -34,7 +34,7 @@ Bonne lecture !
 - Supports
 - Média
 
-### Tricks and tips
+### BONUS : Tricks and tips
 
 - Comment customiser un contact form?
 
@@ -58,7 +58,7 @@ Avant de commencer à travailler : $ npm run watch:sass
 
 Avant de déployer en ligne : $ npm run build:css 
 
-Cette seconde commande à utiliser en fin de développer va compiler le code, concataner, compresser et ajouter tous les préfixs nécessaires. 
+Cette seconde commande à utiliser en fin de développement va compiler le code, concataner, compresser et ajouter tous les préfixs nécessaires. 
 
 ## II. ARCHITECTURE DES DOSSIERS ET FICHIERS
 
@@ -76,7 +76,7 @@ Avantages : lisibilité, organisation, réutilisation, transmission de code.
 
 Comme vous pouvez le voir, nous retrouvons différents dossiers, avec différents fichiers dont chacun est importé dans le fichier parent main.scss.
 
-Remarque : les fichiers importés commence tous par un underscore. 
+Remarque : les fichiers importés commencent tous par un underscore. 
 
 ### PRESENTATION DES DIFFERENTS DOSSIERS ET FICHIERS
 
@@ -190,9 +190,11 @@ $ npm run watch:sass
 ***
 
 
-## 1. HEADER
+## 1. Comment rendre des images responsives directement dans le CSS?
 
-Comment rendre des images responsives directement dans le CSS?
+        _header_starter.scss
+
+
 
 Vous conviendrez qu'il n'est pas nécessaire de charger une image qui fait plus de 2000px pour un device dont la taille de l'écran est inférieure. 
 
@@ -207,11 +209,12 @@ Ouvrez le fichier _header_starter.scss
 
 ***
 
-## 2. FOOTER
+## 2. Comment rendre des images responsives directement dans le HTML?
 
-Comment rendre des images responsives directement dans le HTML?
+        index.html > section footer
 
-Ouvrez le fichier index_starter.html
+
+Ouvrez le fichier index.html
 
 Comme vous pouvez le constater, nous avons une baliser < img > assez traditionnelle. 
 Celle-ci ne permet pas beaucoup de flexibilité et ne s'adaptera aux nécessités du design ou du device. 
@@ -240,13 +243,15 @@ Avec l'élément < picture >, **il faut toujours inclure un élément < img > co
 
 Au sein de cet attribut srcset, les spécifications prévoient deux types de descripteurs permettant de conditionner le chargement des ressources :
 
-le descripteur "x" sélectionne l'image en fonction de la densité de pixel (pixel ratio) de l'écran. 
+**le descripteur "x"** sélectionne l'image en fonction de la densité de pixel (pixel ratio) de l'écran. 
 
 Le descripteur "w" sélectionne l'image en fonction de sa taille et de l'adéquation à la surface de l'écran. 
 
 Si nous désirons changer l'image en fonction d'un format mobile ou desktop et adapter la résolution à l'écran de l'utilisateur, voila le code qu'il est préférable d'utiliser. 
 
 ```
+// code qui vient remplacer l' <img> du footer
+
 <picture class="footer__logo">
     <source srcset="img/logo-white-small-1x.png 1x, img/logo-white-small-2x.png 2x" media="(max-width: 37.5em)">
         <img srcset="img/logo-white-1x.png 1x, img/logo-white-2x.png 2x" alt="Full logo" src="img/logo-white-2x.png">
@@ -255,27 +260,35 @@ Si nous désirons changer l'image en fonction d'un format mobile ou desktop et a
 
 
 
-## 3. ABOUT
+Pour le footer, nous avons utilisé le descripteur "x" afin d'indiquer les différentes images mises à disposition pour le navigateur. 
 
-Dans le footer, nous avons utilisé le descripteur "x" afin d'indiquer les différentes images mises à disposition pour le navigateur. 
+Ici, nous utiliserons le **descripteur "w"**. 
 
-Ici, nous utiliserons l'indicateur "w". 
+ index.html > section about
 
-1. Indiquer les deux images à disposition + leur taille. 300w = 300px et 1000w = 1000px
-2. Calculer le ratio de la taille de chaque image en fonction de nos différents breakpoints
+
+
+1. Dans l'attribut "srcset" indiquer les deux images à disposition + leur taille. 300w = 300px et 1000w = 1000px
+2. Dans l'attribut "sizes" calculer le ratio de la taille de chaque image en fonction de nos différents breakpoints:
 
     - max-width: 900px ou 56.25em   152px / 900px = 17vw
     - max-width: 600px ou 37.5em   152px / 600px = 25vw
     - autre devices : 300px
 
+3. Ajouter la source initiale de l'image au cas "srcset" ne serait pas pris en charge par le navigateur. 
+
 3. Faites le test en simulant le changement de résolution dans votre inspecteur et observer la "current source" de l'image. S'il est préférable de choisir l'image supérieure à 300px, le navigateur le fera. 
 
 ```
+
+// code qui vient remplacer les 3 <img> de la section about
+
+
 <img srcset="img/nat-1.jpg 300w, img/nat-1-large.jpg 1000w"
         sizes="(max-width: 56.25em) 17vw, (max-width: 37.5em) 25vw, 300px" alt="Photo 1"
         class="composition__photo composition__photo--p1" src="img/nat-1-large.jpg">
 
-<img srcset="img/nat-2.jpg 300w, img/nat-2-large.jpg 1000w"
+ <img srcset="img/nat-2.jpg 300w, img/nat-2-large.jpg 1000w"
         sizes="(max-width: 56.25em) 17vw, (max-width: 37.5em) 25vw, 300px" alt="Photo 2"
         class="composition__photo composition__photo--p2" src="img/nat-2-large.jpg">
 
@@ -283,6 +296,144 @@ Ici, nous utiliserons l'indicateur "w".
         sizes="(max-width: 56.25em) 17vw, (max-width: 37.5em) 25vw, 300px" alt="Photo 3"
         class="composition__photo composition__photo--p3" src="img/nat-3-large.jpg">
 ```
+
+***
+
+## 3. Comment utilisier les Media Queries?
+
+### Mobile first VS Desktop first? 
+
+Pour ce workshop, il était plus facile de passer d'une version desktop vers une version mobile. Etant donné, que la grande majortié des internautes consulteront votre site web sur leur smartphone, il est cependant conseillé de commencer par le mobile. En fonction de vos utilisateurs et de votre site web, c'est à vous de savoir par quelle approche commencer. 
+
+Mobile first : min-width > min-width > min-width
+
+Desktop first : max-width > max-width > max-width
+
+### Bonnes pratiques : 
+
+**Ouvrez le fichier _mixins.scss**
+
+Nos différents breakpoints sont présentés en commentaires : 
+
+```
+// MEDIA QUERY MANAGER
+
+0 - 600px:      Phone
+
+600 - 900px:    Tablet portrait
+
+900 - 1200px:   Tablet landscape
+
+[1200 - 1800] is where our normal styles apply
+
+1800px + :      Big desktop
+
+$breakpoint arguement choices:
+- phone
+- tab-port
+- tab-land
+- big-desktop
+```
+
+Ensuite, vous voyez d'étranges fonctions appellées mixins, il s'agit d'un ensemble de règle css (conditionnées ou non) encapsulées dans une fonction. 
+
+Déclaration de la mixin : @mixin $name
+
+Import de la mixin : @include $name
+
+```
+@mixin respond($breakpoint) {
+    @if $breakpoint==phone {
+        @media only screen and (max-width: 37.5em) {
+            @content
+        }
+
+        ; //600px
+    }
+
+    @if $breakpoint==tab-port {
+        @media only screen and (max-width: 56.25em) {
+            @content
+        }
+
+        ; //900px
+    }
+
+    @if $breakpoint==tab-land {
+        @media only screen and (max-width: 75em) {
+            @content
+        }
+
+        ; //1200px
+    }
+
+    @if $breakpoint==big-desktop {
+        @media only screen and (min-width: 112.5em) {
+            @content
+        }
+
+        ; //1800
+    }
+}
+```
+
+$breakpoint est passé en argument, ensuite la mixin est conditionnée avec les différentes tailles de device. Cela nous permet d'appeler plus facilement nos différents media queries. 
+
+Egalement, comme pour nos variables générales $default-font-size et $colors, il suffit de modifier la valeur initiale déclarée pour modifier toutes les autres valeurs des fichiers. 
+
+Pour appeler nos différents media queries, nous utiliserons simplement : 
+
+```
+@include respond(phone) {
+    nouvelles règles css à appliquer
+}
+@include respond(tab-port) {
+    nouvelles règles css à appliquer
+}
+@include respond(tab-land) {
+    nouvelles règles css à appliquer
+}
+desktop = sans mq
+
+@include respond(big-desktop) {
+    nouvelles règles css à appliquer
+}
+```
+
+### Ordre d'application
+
+ Base + typography > general layout + grid > page layout > components
+
+ ### Pourquoi utiliser des em? 
+
+ Il s'agit d'une convention. Les media queries seront toujours calculés en fonction de la root font-size. 
+
+1em = 16px
+
+
+Dans ce workshop, nous allons utiliser les media queries pour la section about et pour notre formulaire. Il vous suffit de comparer les fichier _starter et _finish pour voir comment ils ont été utilisés. 
+
+Essayez par vous-même : 
+
+3 fichiers devront être modifiés : 
+
+- _composition_starter.scss
+- _home_starter.scss
+- _form_starter.scss
+
+
+***
+
+## 4. Bonus : Comment customiser un contact form
+
+
+
+
+
+
+
+
+
 
 
 
